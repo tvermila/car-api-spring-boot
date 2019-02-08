@@ -135,7 +135,7 @@ components:
           description: Registration plate of the car
         year:
           type: integer
-          description: Manufacture year of the car
+          description: Year of manufacture of the car
         power:
           type: integer
           description: Power of the car

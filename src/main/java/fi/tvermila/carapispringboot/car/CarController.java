@@ -5,6 +5,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,16 +17,25 @@ public class CarController {
 	private CarRepository carRepository;
 	
 	@GetMapping("/cars")
-	public List<Car> getCars(@RequestParam(required=false) String make) {
+	public ResponseEntity<List<Car>> getCars(@RequestParam(required=false) String make,
+							 @RequestParam(required=false) String model) {
 		List<Car> cars = carRepository.findAll();
 		
+		//filter cars by make
 		if (make != null) {
 			cars = cars.stream()
 					.filter(car -> car.getMake().equals(make))
 					.collect(Collectors.toList());
 		}
 		
-		return cars;
+		//filter cars by model
+		if (model != null) {
+			cars = cars.stream()
+					.filter(car -> car.getModel().equals(model))
+					.collect(Collectors.toList());
+		}
+		
+		return ResponseEntity.ok(cars);
 	}
 
 }
