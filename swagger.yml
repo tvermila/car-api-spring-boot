@@ -103,7 +103,7 @@ paths:
           description: Car not found
     delete:
       summary: Delete car from database
-      operationId: deleteCar
+      operationId: deleteCarById
       parameters: 
         - in: path
           name: id
