@@ -81,7 +81,7 @@ paths:
           description: Car not found
     put:
       summary: Update car
-      operationId: updateCar
+      operationId: updateCarById
       parameters:
         - in: path
           name: id

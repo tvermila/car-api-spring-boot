@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,7 +67,7 @@ public class CarController {
 	}
 	
 	@DeleteMapping("/cars/{id}")
-	public ResponseEntity<?> deleteCar(@PathVariable long id) {
+	public ResponseEntity<?> deleteCarById(@PathVariable long id) {
 		if (carRepository.existsById(id)) {
 			carRepository.deleteById(id);
 			return ResponseEntity.ok().build();			
@@ -74,6 +76,15 @@ public class CarController {
 			return ResponseEntity.notFound().build();	
 	}
 	
-	
+	@PutMapping("/cars/{id}")
+	public ResponseEntity<?> updateCarById(@PathVariable long id,
+										   @RequestBody Car car) {
+		if (carRepository.existsById(id)) {
+			carRepository.save(car);
+			return ResponseEntity.ok().build();			
+		}				
+		else
+			return ResponseEntity.notFound().build();
+	}	
 
 }
