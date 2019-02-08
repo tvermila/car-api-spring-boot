@@ -1,0 +1,152 @@
+openapi: "3.0.0"
+info:
+  description: 'Get, Create, Update and Delete Car objects'
+  version: 1.0.0
+  title: My Car API with Spring Boot
+servers: 
+  - url: http://localhost:8080
+    description: localhost
+paths:
+  /cars:
+    get:
+      summary: Returns a list of cars.
+      operationId: getCars
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfCars'
+      parameters:
+        - in: query
+          name: make
+          description: Make of the car
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: model
+          description: Model of the car
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: minYear
+          description: Minimum manufacture year of the car
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: maxYear
+          description: Maximum manufacture year of the car
+          required: false
+          schema:
+            type: integer
+    post:
+      summary: Add a car to the database
+      operationId: addCar
+      requestBody:
+        description: Car object which will be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: invalid request
+  '/cars/{id}':
+    get:
+      summary: Get car by ID
+      description: Returns a single Car
+      operationId: getCarById
+      parameters:
+        - in: path
+          name: id
+          description: ID of Car to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+    put:
+      summary: Update car
+      operationId: updateCar
+      parameters:
+        - in: path
+          name: id
+          description: ID of Car to return
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Car object which will replace the car in the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Successfully updated
+        '404':
+          description: Car not found
+    delete:
+      summary: Delete car from database
+      operationId: deleteCar
+      parameters: 
+        - in: path
+          name: id
+          description: ID of Car to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted
+        '404':
+          description: Car not found
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        make:
+          type: string
+          description: Make of the car
+        model:
+          type: string
+          description: Model of the car
+        plate:
+          type: string
+          description: Registration plate of the car
+        year:
+          type: integer
+          description: Manufacture year of the car
+        power:
+          type: integer
+          description: Power of the car
+        motor:
+          type: integer
+          description: Capacity of the motor
+        inspectionDate:
+          type: string
+          format: date
+          description: Vehicle inspection date
+    ListOfCars:
+      type: array
+      items:
+        $ref: '#/components/schemas/Car'
