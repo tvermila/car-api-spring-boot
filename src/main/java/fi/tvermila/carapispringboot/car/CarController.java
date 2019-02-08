@@ -1,5 +1,6 @@
 package fi.tvermila.carapispringboot.car;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -9,10 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 public class CarController {
@@ -85,6 +90,19 @@ public class CarController {
 		}				
 		else
 			return ResponseEntity.notFound().build();
-	}	
+	}
+	
+	@PostMapping("/cars")
+	public ResponseEntity<?> addCar(@RequestBody Car car, UriComponentsBuilder uri) {
+		Car addedCar = carRepository.save(car);
+		if (addedCar != null) {
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(addedCar.getId()).toUri();
+			return ResponseEntity.created(location).build();			
+		}
+		else
+			return ResponseEntity.unprocessableEntity().build();
+		
+	}
 
 }
