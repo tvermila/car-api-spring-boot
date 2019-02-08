@@ -19,7 +19,8 @@ public class CarController {
 	@GetMapping("/cars")
 	public ResponseEntity<List<Car>> getCars(@RequestParam(required=false) String make,
 							 @RequestParam(required=false) String model,
-							 @RequestParam(required=false) Integer minYear) {
+							 @RequestParam(required=false) Integer minYear,
+							 @RequestParam(required=false) Integer maxYear) {
 		List<Car> cars = carRepository.findAll();
 		
 		//filters cars by make
@@ -36,13 +37,19 @@ public class CarController {
 					.collect(Collectors.toList());
 		}
 		
+		//filters cars by minimum year of manufacture
 		if (minYear != null) {
 			cars = cars.stream()
 					.filter(car -> car.getYear() >= minYear)
 					.collect(Collectors.toList());
 		}
 		
-		
+		//filters cars by maximum year of manufacture
+		if (maxYear != null) {
+			cars = cars.stream()
+					.filter(car -> car.getYear() <= maxYear)
+					.collect(Collectors.toList());
+		}		
 		
 		return ResponseEntity.ok(cars);
 	}
