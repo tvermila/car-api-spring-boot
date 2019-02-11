@@ -23,7 +23,7 @@ public class Car {
 	private String plate;
 	private int year;
 	private int power;
-	private int motor;
-	private Date inspectionDate;	
+	private int engine;
+	private Date dateOfInspection;	
 
 }
