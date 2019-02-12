@@ -95,16 +95,12 @@ public class CarController {
 	@PostMapping("/cars")
 	public ResponseEntity<?> addCar(@Valid @RequestBody Car car) {
 		Car addedCar = carRepository.save(car);
-		if (addedCar != null) {
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(addedCar.getId())
-					.toUri();
+		URI location = ServletUriComponentsBuilder				
+				.fromCurrentRequest().path("/{id}")					
+				.buildAndExpand(addedCar.getId())
+				.toUri();
 			
-			return ResponseEntity.created(location).build();
-		}
-		else
-			return ResponseEntity.unprocessableEntity().build();
+		return ResponseEntity.created(location).build();
 		
 	}
 
