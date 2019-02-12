@@ -2,8 +2,9 @@ package fi.tvermila.carapispringboot.car;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+
 
 @RestController
 public class CarController {
@@ -33,7 +33,7 @@ public class CarController {
 		List<Car> cars = carRepository.findAll();
 		
 		//filters cars by make
-		if (make != null) {
+		if (make != null ) {
 			cars = cars.stream()
 					.filter(car -> car.getMake().equals(make))
 					.collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class CarController {
 	public ResponseEntity<?> deleteCarById(@PathVariable long id) {
 		if (carRepository.existsById(id)) {
 			carRepository.deleteById(id);
-			return ResponseEntity.ok().build();			
+			return ResponseEntity.noContent().build();			
 		}				
 		else
 			return ResponseEntity.notFound().build();	
@@ -83,22 +83,25 @@ public class CarController {
 	
 	@PutMapping("/cars/{id}")
 	public ResponseEntity<?> updateCarById(@PathVariable long id,
-										   @RequestBody Car car) {
+										   @Valid @RequestBody Car car) {
 		if (carRepository.existsById(id)) {
 			carRepository.save(car);
-			return ResponseEntity.ok().build();			
+			return ResponseEntity.ok(car);			
 		}				
 		else
 			return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping("/cars")
-	public ResponseEntity<?> addCar(@RequestBody Car car, UriComponentsBuilder uri) {
+	public ResponseEntity<?> addCar(@Valid @RequestBody Car car) {
 		Car addedCar = carRepository.save(car);
 		if (addedCar != null) {
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(addedCar.getId()).toUri();
-			return ResponseEntity.created(location).build();			
+			URI location = ServletUriComponentsBuilder
+					.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(addedCar.getId())
+					.toUri();
+			
+			return ResponseEntity.created(location).build();
 		}
 		else
 			return ResponseEntity.unprocessableEntity().build();
