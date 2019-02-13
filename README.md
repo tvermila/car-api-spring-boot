@@ -13,4 +13,4 @@ You can then make requests to http://localhost:8080/cars
 
 You can filter cars by make, model, minYear and maxYear parameters. For example:<br/>
 GET REQUEST to http://localhost:8080/cars?minYear=2000&maxYear=2015<br/>
-would return JSON array object which constains cars manufactured between years 2000 and 2015.
+would return JSON array which constains cars manufactured between years 2000 and 2015.
