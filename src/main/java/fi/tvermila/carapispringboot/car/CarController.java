@@ -83,8 +83,16 @@ public class CarController {
 	
 	@PutMapping("/cars/{id}")
 	public ResponseEntity<?> updateCarById(@PathVariable long id,
-										   @Valid @RequestBody Car car) {
+										   @Valid @RequestBody Car updatedCar) {
 		if (carRepository.existsById(id)) {
+			Car car = carRepository.getOne(id);
+			car.setMake(updatedCar.getMake());
+			car.setModel(updatedCar.getModel());
+			car.setEngine(updatedCar.getEngine());
+			car.setPlate(updatedCar.getPlate());
+			car.setPower(updatedCar.getPower());
+			car.setYear(updatedCar.getYear());
+			car.setDateOfInspection(updatedCar.getDateOfInspection());
 			carRepository.save(car);
 			return ResponseEntity.ok(car);			
 		}				
