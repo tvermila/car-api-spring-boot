@@ -85,6 +85,7 @@ public class CarController {
 	public ResponseEntity<?> updateCarById(@PathVariable long id,
 										   @Valid @RequestBody Car updatedCar) {
 		if (carRepository.existsById(id)) {
+			//Get car from database, update its attributes and save it to database
 			Car car = carRepository.getOne(id);
 			car.setMake(updatedCar.getMake());
 			car.setModel(updatedCar.getModel());
