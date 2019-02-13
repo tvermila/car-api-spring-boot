@@ -85,7 +85,7 @@ paths:
       parameters:
         - in: path
           name: id
-          description: ID of Car to return
+          description: ID of Car to replace
           required: true
           schema:
             type: integer
@@ -107,7 +107,7 @@ paths:
       parameters: 
         - in: path
           name: id
-          description: ID of Car to return
+          description: ID of Car to delete
           required: true
           schema:
             type: integer
@@ -139,13 +139,13 @@ components:
         power:
           type: integer
           description: Power of the car
-        motor:
+        engine:
           type: integer
-          description: Capacity of the motor
-        inspectionDate:
+          description: Capacity of the engine
+        dateOfInspection:
           type: string
           format: date
-          description: Vehicle inspection date
+          description: Vehicle date of inspection
     ListOfCars:
       type: array
       items:
