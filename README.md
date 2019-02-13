@@ -7,4 +7,6 @@ This is a Spring Boot application built using Maven. You can build a jar file an
 git clone https://github.com/tvermila/car-api-spring-boot.git<br/>
 cd car-api-spring-boot<br/>
 ./mvnw package<br/>
-java -jar target/*.jar
+java -jar target/*.jar<br/>
+
+You can then make requests to http://localhost:8080/cars
