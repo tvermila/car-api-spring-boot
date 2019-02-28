@@ -1,6 +1,7 @@
 package fi.tvermila.carapispringboot.car;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,6 @@ public class Car {
 	private int year;
 	private int power;
 	private int engine;
-	private Date dateOfInspection;	
+	private LocalDate dateOfInspection;	
 
 }

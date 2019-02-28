@@ -1,15 +1,12 @@
 package fi.tvermila.carapispringboot;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import java.sql.Date;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import java.time.LocalDate;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runners.MethodSorters;
 import fi.tvermila.carapispringboot.car.Car;
@@ -63,7 +61,7 @@ public class CarApiSpringBootApplicationTests {
 	
 	@Test
 	public void test5_shouldAddNewCar() throws Exception {
-		Car newCar = new Car(0, "Opel", "Vectra", "BOL-912", 2006, 150, 1900, Date.valueOf("2019-09-01"));
+		Car newCar = new Car(0, "Opel", "Vectra", "BOL-912", 2006, 150, 1900, LocalDate.of(2019, 9, 1));
 		ObjectMapper mapper = new ObjectMapper();
 
 		this.mockMvc
@@ -75,7 +73,7 @@ public class CarApiSpringBootApplicationTests {
 
 	@Test
 	public void test6_shouldUpdateCar() throws Exception {
-		Car updatedCar = new Car(0, "Opel", "Vectra", "BOL-912", 2006, 150, 1900, Date.valueOf("2019-09-01"));
+		Car updatedCar = new Car(0, "Opel", "Vectra", "BOL-912", 2006, 150, 1900, LocalDate.of(2019, 9, 1));
 		ObjectMapper mapper = new ObjectMapper();
 
 		this.mockMvc.perform(
